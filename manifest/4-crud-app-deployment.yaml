@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-app-deployment
+  labels:
+    app: crud-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crud-app
+  template:
+    metadata:
+      labels:
+        app: crud-app
+    spec:
+      containers:
+        - name: crud-app
+          image: docker.io/timur2906/crud-app:1.1
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: POSTGRES_HOST
+              value: postgres-service
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: postgres_port
+            - name: POSTGRES_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: postgres_driver
+          ports:
+            - containerPort: 8000
+      volumes:
+        - name: config-volume
+          configMap:
+            name: postgres-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-app-service
+spec:
+  selector:
+    app: crud-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

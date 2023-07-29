@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS users (
+id bigint PRIMARY KEY,
+name text NOT NULL,
+login text NOT NULL,
+UNIQUE (login)
+);
+
+CREATE SEQUENCE IF NOT EXISTS users_seq
+    START WITH 4
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE;

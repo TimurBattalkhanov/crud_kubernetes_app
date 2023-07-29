@@ -1,0 +1,3 @@
+INSERT INTO users(id, name, login) SELECT 1 as id, 'Will Smith' as name, 'w.smith' as login WHERE NOT EXISTS( SELECT id FROM users WHERE id = 1) LIMIT 1;
+INSERT INTO users(id, name, login) SELECT 2 as id, 'Tom Cruise' as name, 't.cruise' as login WHERE NOT EXISTS( SELECT id FROM users WHERE id = 2) LIMIT 1;
+INSERT INTO users(id, name, login) SELECT 3 as id, 'Johnny Depp' as name, 'j.depp' as login WHERE NOT EXISTS( SELECT id FROM users WHERE id = 3) LIMIT 1;
