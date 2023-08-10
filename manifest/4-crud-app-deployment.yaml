@@ -51,10 +51,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: crud-app-service
+  annotations:
+    prometheus.io/path: "/actuator/prometheus"
+    prometheus.io/port: "8000"
+    prometheus.io/scrape: "true"
 spec:
   selector:
     app: crud-app
   ports:
     - protocol: TCP
+      name: crud-app-port
       port: 8000
       targetPort: 8000

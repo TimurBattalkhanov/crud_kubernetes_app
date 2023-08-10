@@ -1,4 +1,10 @@
 # crudApp
+
+Сборка нового образа в docker
+mvn clean package
+docker build --tag timur2906/crud-app:1.1 .
+docker push timur2906/crud-app:1.1
+
 Инструкция по запуску проекта
 
 Все файлы манифесты кубернетеса расположены в папке manifest
@@ -17,3 +23,14 @@ kubectl port-forward svc/nginx-ingress-nginx-controller -n m 80:80
 arch.homework 127.0.0.1
 
 Работу приложения можно проверить выполнив команду curl http://arch.homework/users/all
+
+# Мониторинг Prometheus и Grafana
+Для установки prometheus и grafana в kubernetes используем команду:
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install -f values.yaml prometheus prometheus-community/kube-prometheus-stack
+
+
+
+helm install -f values.yaml prometheus prometheus-community/prometheus
+helm install -f values.yaml grafana grafana/grafana

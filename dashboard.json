@@ -1,0 +1,353 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "API Metrics Dashboard",
+    "panels": [
+      {
+        "id": 1,
+        "type": "graph",
+        "title": "Latency (Response Time)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_seconds_bucket{job=\"your-job\", status=\"200\"}[1m])) by (le, method))",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{method}} - 0.5 quantile"
+          },
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job=\"your-job\", status=\"200\"}[1m])) by (le, method))",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{method}} - 0.95 quantile"
+          },
+          {
+            "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job=\"your-job\", status=\"200\"}[1m])) by (le, method))",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{method}} - 0.99 quantile"
+          },
+          {
+            "expr": "max(rate(http_request_duration_seconds_bucket{job=\"your-job\", status=\"200\"}[1m])) by (method)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{method}} - Max"
+          }
+        ],
+        "xaxis": {
+          "show": true
+        },
+        "yaxes": [
+          {
+            "format": "ms",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": true,
+          "min": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "stack": false,
+        "steppedLine": false,
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "ms",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "id": 2,
+        "type": "graph",
+        "title": "RPS",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{job=\"your-job\", status=\"200\"}[1m])) by (method)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{method}}"
+          }
+        ],
+        "xaxis": {
+          "show": true
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 7
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "stack": false,
+        "steppedLine": false,
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "id": 3,
+        "type": "graph",
+        "title": "Error Rate",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{job=\"your-job\", status=\"500\"}[1m])) by (method)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{method}}"
+          }
+        ],
+        "xaxis": {
+          "show": true
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 14
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "stack": false,
+        "steppedLine": false,
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      }
+    ],
+    "timezone": "",
+    "schemaVersion": 18,
+    "version": 0,
+    "links": [],
+    "gnetId": null,
+    "sharedCrosshair": false,
+    "sharedTooltip": false,
+    "hideControls": false,
+    "editable": true,
+    "graphTooltip": 0,
+    "panels": [],
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "time_options": [],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": []
+    },
+    "refresh": "5s"
+  },
+  "overwrite": false
+}
