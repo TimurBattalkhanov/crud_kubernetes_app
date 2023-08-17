@@ -27,10 +27,7 @@ arch.homework 127.0.0.1
 # Мониторинг Prometheus и Grafana
 Для установки prometheus и grafana в kubernetes используем команду:
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-helm install -f values.yaml prometheus prometheus-community/kube-prometheus-stack
-
-
-
-helm install -f values.yaml prometheus prometheus-community/prometheus
-helm install -f values.yaml grafana grafana/grafana
+helm install prometheus prometheus-community/prometheus
+helm install grafana grafana/grafana -f values.yaml

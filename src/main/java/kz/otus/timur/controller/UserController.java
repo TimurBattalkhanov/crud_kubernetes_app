@@ -1,5 +1,6 @@
 package kz.otus.timur.controller;
 
+import io.micrometer.core.annotation.Timed;
 import kz.otus.timur.dto.UserDto;
 import kz.otus.timur.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Timed
 public class UserController {
 
     private final UserService userService;

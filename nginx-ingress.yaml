@@ -1,6 +1,5 @@
 controller:
   kind: DaemonSet
-  
   reportNodeInternalIp: true
 
   hostPort:

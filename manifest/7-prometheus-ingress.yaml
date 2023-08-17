@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grafana-ingress
+  name: prometheus-ingress
 spec:
   rules:
-    - host: arch.homework.grafana
+    - host: arch.homework.prometheus
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: grafana
+                name: prometheus-server
                 port:
-                  number: 3000
+                  number: 9090
   ingressClassName: nginx
